@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dino API Test</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;font-family:Arial, Helvetica, sans-serif}
+
+body{background:#000;color:#fff;padding:30px}
+
+h1{margin-bottom:25px;text-align:center}
+
+.container{max-width:1200px;margin:auto}
+
+/* SEARCH */
+.search{margin-bottom:25px;display:flex;gap:10px}
+.search input{flex:1}
+
+/* FORM */
+form{
+background:#0b0b0b;
+border:1px solid #222;
+padding:20px;
+border-radius:12px;
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:12px;
+margin-bottom:35px
+}
+
+.form-actions{
+grid-column:1/-1;
+display:flex;
+gap:10px
+}
+
+input{
+padding:10px;
+border-radius:6px;
+border:none;
+background:#111;
+color:#fff;
+border:1px solid #333
+}
+
+button{
+padding:10px 14px;
+border:none;
+border-radius:6px;
+font-weight:bold;
+cursor:pointer;
+transition:0.25s
+}
+
+button:hover{filter:brightness(1.2);transform:scale(1.03)}
+
+.btn-add{background:#D60270;color:white}
+.btn-clear{background:#333;color:white}
+
+/* CARDS GRID */
+.cards{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+gap:20px
+}
+
+/* CARD */
+.card{
+background:#111;
+padding:20px;
+border-radius:12px;
+border:1px solid #222;
+position:relative;
+overflow:hidden;
+transition:0.25s;
+animation:fadeUp 0.5s ease
+}
+
+.card:hover{
+transform:translateY(-6px) scale(1.02);
+border-color:#9B4F96
+}
+
+.card::before{
+content:"";
+position:absolute;
+inset:0;
+background:linear-gradient(120deg,#D60270,#9B4F96,#0038A8);
+opacity:0.08;
+pointer-events:none
+}
+
+.card h3{margin-bottom:10px;color:#D60270;position:relative}
+
+.stats{
+font-size:14px;
+line-height:1.6;
+position:relative
+}
+
+/* ACTION BUTTONS */
+.actions{
+margin-top:15px;
+display:flex;
+gap:10px;
+position:relative
+}
+
+.edit{background:#9B4F96;color:white}
+.delete{background:#0038A8;color:white}
+
+.actions button{flex:1}
+
+/* MODAL */
+.modal{
+position:fixed;
+inset:0;
+background:rgba(0,0,0,0.7);
+display:none;
+align-items:center;
+justify-content:center;
+z-index:1000
+}
+
+.modal-content{
+background:#0b0b0b;
+padding:25px;
+border-radius:12px;
+border:1px solid #333;
+width:500px;
+max-width:90%;
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:10px;
+animation:fadeUp 0.3s ease
+}
+
+.modal-content h2{
+grid-column:1/-1;
+text-align:center;
+margin-bottom:10px
+}
+
+.modal-actions{
+grid-column:1/-1;
+display:flex;
+gap:10px
+}
+
+.save{background:#D60270;color:white;flex:1}
+.close{background:#333;color:white;flex:1}
+
+/* ANIMATION */
+@keyframes fadeUp{
+from{opacity:0;transform:translateY(20px)}
+to{opacity:1;transform:translateY(0)}
+}
+
+</style>
+</head>
+<body>
+<div class="container">
+
+<h1>🦖 Dino API Test</h1>
+
+<div class="search">
+<input id="searchId" placeholder="Buscar Dino por ID">
+<button onclick="buscarDino()">Buscar</button>
+<button onclick="carregarDinos()">Listar Todos</button>
+</div>
+
+<form id="form">
+<input placeholder="Nome" id="nome" required>
+<input placeholder="Altura" id="altura" type="number" step="0.01">
+<input placeholder="Comprimento" id="comprimento" type="number" step="0.01">
+<input placeholder="Peso" id="peso" type="number" step="0.01">
+<input placeholder="Velocidade" id="velocidade" type="number" step="0.01">
+<input placeholder="Agilidade" id="agilidade" type="number">
+<input placeholder="Longevidade" id="longevidade" type="number">
+<input placeholder="Numero Magico" id="numero">
+<input placeholder="Imagem (ignorado)" id="imagem">
+
+<div class="form-actions">
+<button class="btn-add" type="submit">Adicionar Dino</button>
+<button class="btn-clear" type="button" onclick="form.reset()">Limpar</button>
+</div>
+</form>
+
+<div class="cards" id="cards"></div>
+
+</div>
+
+<!-- MODAL EDIT -->
+<div class="modal" id="editModal">
+<div class="modal-content">
+<h2>Editar Dino</h2>
+
+<input id="edit_nome" placeholder="Nome">
+<input id="edit_altura" type="number" step="0.01" placeholder="Altura">
+<input id="edit_comprimento" type="number" step="0.01" placeholder="Comprimento">
+<input id="edit_peso" type="number" step="0.01" placeholder="Peso">
+<input id="edit_velocidade" type="number" step="0.01" placeholder="Velocidade">
+<input id="edit_agilidade" type="number" placeholder="Agilidade">
+<input id="edit_longevidade" type="number" placeholder="Longevidade">
+<input id="edit_numero" placeholder="Numero Magico">
+<input id="edit_imagem" placeholder="Imagem">
+
+<div class="modal-actions">
+<button class="save" onclick="salvarEdicao()">Salvar</button>
+<button class="close" onclick="fecharModal()">Cancelar</button>
+</div>
+</div>
+</div>
+
+<script>
+
+const API="http://localhost:3000/dinos"
+let editId=null
+
+const modal=document.getElementById("editModal")
+
+async function carregarDinos(){
+const res=await fetch(API)
+const data=await res.json()
+render(data)
+}
+
+async function buscarDino(){
+const id=document.getElementById("searchId").value
+if(!id)return carregarDinos()
+
+const res=await fetch(API+"/"+id)
+if(res.status===404){alert("Dino não encontrado");return}
+
+const data=await res.json()
+render([data])
+}
+
+function render(dinos){
+const cards=document.getElementById("cards")
+cards.innerHTML=""
+
+dinos.forEach(d=>{
+
+const id=d.id_dino || d.ID_DINO
+
+const card=document.createElement("div")
+card.className="card"
+
+card.innerHTML=`
+<h3>${d.nome||d.NOME}</h3>
+<div class="stats">
+Altura: ${d.altura||d.ALTURA}<br>
+Comprimento: ${d.comprimento||d.COMPRIMENTO}<br>
+Peso: ${d.peso||d.PESO}<br>
+Velocidade: ${d.velocidade||d.VELOCIDADE}<br>
+Agilidade: ${d.agilidade||d.AGILIDADE}<br>
+Longevidade: ${d.longevidade||d.LONGEVIDADE}<br>
+Numero Magico: ${d.numero_magico||d.NUMERO_MAGICO}
+</div>
+
+<div class="actions">
+<button class="edit">Editar</button>
+<button class="delete">Excluir</button>
+</div>
+`
+
+card.querySelector(".delete").onclick=()=>deletar(id)
+card.querySelector(".edit").onclick=()=>abrirModal(d)
+
+cards.appendChild(card)
+})
+}
+
+function abrirModal(d){
+editId = d.ID_DINO || d.id_dino
+
+const nomeInput = document.getElementById("edit_nome")
+const alturaInput = document.getElementById("edit_altura")
+const compInput = document.getElementById("edit_comprimento")
+const pesoInput = document.getElementById("edit_peso")
+const velInput = document.getElementById("edit_velocidade")
+const agiInput = document.getElementById("edit_agilidade")
+const longInput = document.getElementById("edit_longevidade")
+const numInput = document.getElementById("edit_numero")
+const imgInput = document.getElementById("edit_imagem")
+
+nomeInput.value = d.NOME || d.nome || ""
+alturaInput.value = d.ALTURA || d.altura || ""
+compInput.value = d.COMPRIMENTO || d.comprimento || ""
+pesoInput.value = d.PESO || d.peso || ""
+velInput.value = d.VELOCIDADE || d.velocidade || ""
+agiInput.value = d.AGILIDADE || d.agilidade || ""
+longInput.value = d.LONGEVIDADE || d.longevidade || ""
+numInput.value = d.NUMERO_MAGICO || d.numero_magico || ""
+imgInput.value = d.IMAGEM || d.imagem || ""
+
+modal.style.display = "flex"
+}
+
+function fecharModal(){
+modal.style.display="none"
+editId=null
+}
+
+async function salvarEdicao(){
+
+const body={
+NOME:edit_nome.value,
+ALTURA:parseFloat(edit_altura.value),
+COMPRIMENTO:parseFloat(edit_comprimento.value),
+PESO:parseFloat(edit_peso.value),
+VELOCIDADE:parseFloat(edit_velocidade.value),
+AGILIDADE:parseInt(edit_agilidade.value),
+LONGEVIDADE:parseInt(edit_longevidade.value),
+NUMERO_MAGICO:parseInt(edit_numero.value),
+IMAGEM:edit_imagem.value
+}
+
+await fetch(API+"/"+editId,{method:"PUT",headers:{"Content-Type":"application/json"},body:JSON.stringify(body)})
+
+fecharModal()
+carregarDinos()
+}
+
+form.onsubmit=async e=>{
+e.preventDefault()
+
+const body={
+NOME:nome.value,
+ALTURA:parseFloat(altura.value),
+COMPRIMENTO:parseFloat(comprimento.value),
+PESO:parseFloat(peso.value),
+VELOCIDADE:parseFloat(velocidade.value),
+AGILIDADE:parseInt(agilidade.value),
+LONGEVIDADE:parseInt(longevidade.value),
+NUMERO_MAGICO:parseInt(numero.value),
+IMAGEM:imagem.value
+}
+
+await fetch(API,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(body)})
+
+form.reset()
+carregarDinos()
+}
+
+async function deletar(id){
+if(!confirm("Excluir dino?"))return
+await fetch(API+"/"+id,{method:"DELETE"})
+carregarDinos()
+}
+
+carregarDinos()
+
+</script>
+
+</body>
+</html>
