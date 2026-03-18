@@ -178,12 +178,14 @@ to{opacity:1;transform:translateY(0)}
 <input placeholder="Velocidade" id="velocidade" type="number" step="0.01">
 <input placeholder="Agilidade" id="agilidade" type="number">
 <input placeholder="Longevidade" id="longevidade" type="number">
-<input placeholder="Numero Magico" id="numero">
-<input placeholder="Imagem (ignorado)" id="imagem">
+<input placeholder="Numero Magico" id="numero" type="number">
+<input placeholder="Fama" id="fama" type="number">
+<input placeholder="Tipo" id="tipo" required>
+<input placeholder="Imagem (URL)" id="imagem">
 
 <div class="form-actions">
 <button class="btn-add" type="submit">Adicionar Dino</button>
-<button class="btn-clear" type="button" onclick="form.reset()">Limpar</button>
+<button class="btn-clear" type="button" onclick="document.getElementById('form').reset()">Limpar</button>
 </div>
 </form>
 
@@ -191,7 +193,6 @@ to{opacity:1;transform:translateY(0)}
 
 </div>
 
-<!-- MODAL EDIT -->
 <div class="modal" id="editModal">
 <div class="modal-content">
 <h2>Editar Dino</h2>
@@ -203,8 +204,10 @@ to{opacity:1;transform:translateY(0)}
 <input id="edit_velocidade" type="number" step="0.01" placeholder="Velocidade">
 <input id="edit_agilidade" type="number" placeholder="Agilidade">
 <input id="edit_longevidade" type="number" placeholder="Longevidade">
-<input id="edit_numero" placeholder="Numero Magico">
-<input id="edit_imagem" placeholder="Imagem">
+<input id="edit_numero" type="number" placeholder="Numero Magico">
+<input id="edit_fama" type="number" placeholder="Fama">
+<input id="edit_tipo" placeholder="Tipo">
+<input id="edit_imagem" placeholder="Imagem (URL)">
 
 <div class="modal-actions">
 <button class="save" onclick="salvarEdicao()">Salvar</button>
@@ -257,7 +260,9 @@ Peso: ${d.peso||d.PESO}<br>
 Velocidade: ${d.velocidade||d.VELOCIDADE}<br>
 Agilidade: ${d.agilidade||d.AGILIDADE}<br>
 Longevidade: ${d.longevidade||d.LONGEVIDADE}<br>
-Numero Magico: ${d.numero_magico||d.NUMERO_MAGICO}
+Numero Magico: ${d.numero_magico||d.NUMERO_MAGICO}<br>
+Fama: ${d.fama||d.FAMA}<br>
+Tipo: ${d.tipo||d.TIPO}
 </div>
 
 <div class="actions">
@@ -276,25 +281,17 @@ cards.appendChild(card)
 function abrirModal(d){
 editId = d.ID_DINO || d.id_dino
 
-const nomeInput = document.getElementById("edit_nome")
-const alturaInput = document.getElementById("edit_altura")
-const compInput = document.getElementById("edit_comprimento")
-const pesoInput = document.getElementById("edit_peso")
-const velInput = document.getElementById("edit_velocidade")
-const agiInput = document.getElementById("edit_agilidade")
-const longInput = document.getElementById("edit_longevidade")
-const numInput = document.getElementById("edit_numero")
-const imgInput = document.getElementById("edit_imagem")
-
-nomeInput.value = d.NOME || d.nome || ""
-alturaInput.value = d.ALTURA || d.altura || ""
-compInput.value = d.COMPRIMENTO || d.comprimento || ""
-pesoInput.value = d.PESO || d.peso || ""
-velInput.value = d.VELOCIDADE || d.velocidade || ""
-agiInput.value = d.AGILIDADE || d.agilidade || ""
-longInput.value = d.LONGEVIDADE || d.longevidade || ""
-numInput.value = d.NUMERO_MAGICO || d.numero_magico || ""
-imgInput.value = d.IMAGEM || d.imagem || ""
+document.getElementById("edit_nome").value = d.NOME || d.nome || ""
+document.getElementById("edit_altura").value = d.ALTURA || d.altura || ""
+document.getElementById("edit_comprimento").value = d.COMPRIMENTO || d.comprimento || ""
+document.getElementById("edit_peso").value = d.PESO || d.peso || ""
+document.getElementById("edit_velocidade").value = d.VELOCIDADE || d.velocidade || ""
+document.getElementById("edit_agilidade").value = d.AGILIDADE || d.agilidade || ""
+document.getElementById("edit_longevidade").value = d.LONGEVIDADE || d.longevidade || ""
+document.getElementById("edit_numero").value = d.NUMERO_MAGICO || d.numero_magico || ""
+document.getElementById("edit_fama").value = d.FAMA || d.fama || ""
+document.getElementById("edit_tipo").value = d.TIPO || d.tipo || ""
+document.getElementById("edit_imagem").value = d.IMAGEM || d.imagem || ""
 
 modal.style.display = "flex"
 }
@@ -307,15 +304,17 @@ editId=null
 async function salvarEdicao(){
 
 const body={
-NOME:edit_nome.value,
-ALTURA:parseFloat(edit_altura.value),
-COMPRIMENTO:parseFloat(edit_comprimento.value),
-PESO:parseFloat(edit_peso.value),
-VELOCIDADE:parseFloat(edit_velocidade.value),
-AGILIDADE:parseInt(edit_agilidade.value),
-LONGEVIDADE:parseInt(edit_longevidade.value),
-NUMERO_MAGICO:parseInt(edit_numero.value),
-IMAGEM:edit_imagem.value
+NOME:document.getElementById("edit_nome").value,
+ALTURA:parseFloat(document.getElementById("edit_altura").value) || null,
+COMPRIMENTO:parseFloat(document.getElementById("edit_comprimento").value) || null,
+PESO:parseFloat(document.getElementById("edit_peso").value) || null,
+VELOCIDADE:parseFloat(document.getElementById("edit_velocidade").value) || null,
+AGILIDADE:parseInt(document.getElementById("edit_agilidade").value) || null,
+LONGEVIDADE:parseInt(document.getElementById("edit_longevidade").value) || null,
+NUMERO_MAGICO:parseInt(document.getElementById("edit_numero").value) || null,
+FAMA:parseInt(document.getElementById("edit_fama").value) || null,
+TIPO:document.getElementById("edit_tipo").value,
+IMAGEM:document.getElementById("edit_imagem").value
 }
 
 await fetch(API+"/"+editId,{method:"PUT",headers:{"Content-Type":"application/json"},body:JSON.stringify(body)})
@@ -324,24 +323,26 @@ fecharModal()
 carregarDinos()
 }
 
-form.onsubmit=async e=>{
+document.getElementById("form").onsubmit=async e=>{
 e.preventDefault()
 
 const body={
-NOME:nome.value,
-ALTURA:parseFloat(altura.value),
-COMPRIMENTO:parseFloat(comprimento.value),
-PESO:parseFloat(peso.value),
-VELOCIDADE:parseFloat(velocidade.value),
-AGILIDADE:parseInt(agilidade.value),
-LONGEVIDADE:parseInt(longevidade.value),
-NUMERO_MAGICO:parseInt(numero.value),
-IMAGEM:imagem.value
+NOME:document.getElementById("nome").value,
+ALTURA:parseFloat(document.getElementById("altura").value) || null,
+COMPRIMENTO:parseFloat(document.getElementById("comprimento").value) || null,
+PESO:parseFloat(document.getElementById("peso").value) || null,
+VELOCIDADE:parseFloat(document.getElementById("velocidade").value) || null,
+AGILIDADE:parseInt(document.getElementById("agilidade").value) || null,
+LONGEVIDADE:parseInt(document.getElementById("longevidade").value) || null,
+NUMERO_MAGICO:parseInt(document.getElementById("numero").value) || null,
+FAMA:parseInt(document.getElementById("fama").value) || null,
+TIPO:document.getElementById("tipo").value,
+IMAGEM:document.getElementById("imagem").value
 }
 
 await fetch(API,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(body)})
 
-form.reset()
+document.getElementById("form").reset()
 carregarDinos()
 }
 
