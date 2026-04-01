@@ -70,7 +70,7 @@ app.get('/dinos/top/fama/:n', async (req, res) => {
 app.get('/dinos/:id', async (req, res) => {
     const { id } = req.params;
     try {
-        const result = await pool.query('SELECT * FROM DINO WHERE ID_DINO = $1', [id]);
+        const result = await pool.query('SELECT * FROM DINO WHERE ID = $1', [id]);
         if (result.rows.length === 0) {
             return res.status(404).json({ error: 'Dino não encontrado' });
         }
@@ -107,7 +107,7 @@ app.put('/dinos/:id', async (req, res) => {
             `UPDATE DINO SET 
             NOME = $1, ALTURA = $2, COMPRIMENTO = $3, PESO = $4, VELOCIDADE = $5, 
             AGILIDADE = $6, LONGEVIDADE = $7, NUMERO_MAGICO = $8, IMAGEM = $9, FAMA = $10, TIPO = $11 
-            WHERE ID_DINO = $12 RETURNING *`,
+            WHERE ID = $12 RETURNING *`,
             [NOME, ALTURA, COMPRIMENTO, PESO, VELOCIDADE, AGILIDADE, LONGEVIDADE, NUMERO_MAGICO, IMAGEM, FAMA, TIPO, id]
         );
         if (result.rows.length === 0) {
@@ -124,7 +124,7 @@ app.put('/dinos/:id', async (req, res) => {
 app.delete('/dinos/:id', async (req, res) => {
     const { id } = req.params;
     try {
-        const result = await pool.query('DELETE FROM DINO WHERE ID_DINO = $1 RETURNING *', [id]);
+        const result = await pool.query('DELETE FROM DINO WHERE ID = $1 RETURNING *', [id]);
         if (result.rows.length === 0) {
             return res.status(404).json({ error: 'Dino não encontrado' });
         }
