@@ -95,4 +95,18 @@ Feito com 💙 por [rafaellindemann](https://github.com/rafaellindemann)
 
 ---
 
+<!-- 
+{
+        "id": 0,
+         "codigo": 0,
+         "titulo": "0",
+         "categoria": "0",
+         "sub-categoria": null,
+         "descricao": "",
+         "descricaoCurta": "",
+         "palavrasChave": [],
+         "exemplos": [],
+         "relacionados": []
+    } -->
+
 
