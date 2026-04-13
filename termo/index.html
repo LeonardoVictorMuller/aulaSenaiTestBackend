@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>Wordle Clone</title>
+
+<style>
+  body {
+    font-family: Arial;
+  }
+
+  .linha {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 10px;
+  }
+
+  .linha input {
+    width: 50px;
+    height: 50px;
+    text-align: center;
+    font-size: 24px;
+    text-transform: uppercase;
+  }
+</style>
+</head>
+
+<body>
+
+<div id="tabuleiro"></div>
+
+<script>
+const tabuleiro = document.getElementById("tabuleiro");
+
+// cria uma linha com 5 inputs
+function criarLinha() {
+  const linha = document.createElement("div");
+  linha.classList.add("linha");
+
+  
+
+  for (let i = 0; i < 5; i++) {
+    const input = document.createElement("input");
+    input.maxLength = 1;
+
+    input.addEventListener("input", () => {
+      input.value = input.value.toUpperCase();
+
+      if (input.value && input.nextElementSibling) {
+        input.nextElementSibling.focus();
+      }
+    });
+    const palavra = ""
+    input.addEventListener("keydown", (e) => {
+      // voltar com backspace
+      if (e.key === "Backspace" && !input.value && input.previousElementSibling) {
+        input.previousElementSibling.focus();
+        palavra.push(input.value)
+      }
+
+      // apertou ENTER → cria nova linha
+      if (e.key === "Enter") {
+        criarLinha();
+        const novaLinha = tabuleiro.lastChild;
+        novaLinha.querySelector("input").focus();
+      }
+    });
+
+
+
+    linha.appendChild(input);
+  }
+
+  tabuleiro.appendChild(linha);
+}
+
+// cria a primeira linha ao carregar
+criarLinha();
+</script>
+
+</body>
+</html>
