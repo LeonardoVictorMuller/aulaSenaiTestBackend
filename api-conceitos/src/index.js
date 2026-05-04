@@ -4,158 +4,114 @@ const fs = require('fs');
 const path = require('path');
 
 const app = express();
+const PORT = process.env.PORT || 3000;
+const DATA_FILE = path.join(__dirname, '..', 'data.json');
+
+// Middlewares
 app.use(cors());
 app.use(express.json());
 
-const caminhoArquivo = path.join(__dirname, '..', 'data.json');
+// Helpers
+const readData = () => {
+  const raw = fs.readFileSync(DATA_FILE, 'utf-8');
+  return JSON.parse(raw);
+};
 
-// ==========================
-// FUNÇÕES AUXILIARES
-// ==========================
+const writeData = (data) => {
+  fs.writeFileSync(DATA_FILE, JSON.stringify(data, null, 2), 'utf-8');
+};
 
-// Ler dados
-function lerDados() {
-    try {
-        const data = fs.readFileSync(caminhoArquivo, 'utf-8');
-        return JSON.parse(data);
-    } catch (erro) {
-        console.error('Erro ao ler o arquivo:', erro);
-        return [];
-    }
-}
+const generateId = (items) => {
+  if (items.length === 0) return 1;
+  return Math.max(...items.map((i) => i.id)) + 1;
+};
 
-// Salvar dados
-function salvarDados(dados) {
-    try {
-        fs.writeFileSync(caminhoArquivo, JSON.stringify(dados, null, 2));
-    } catch (erro) {
-        console.error('Erro ao salvar o arquivo:', erro);
-    }
-}
+// ─── Routes ──────────────────────────────────────────────────────────────────
 
-// ==========================
-// ROTAS GET
-// ==========================
-
-// 🔹 Todos os dados
-app.get('/dados', (req, res) => {
-    const dados = lerDados();
-    res.json(dados);
+// GET /items — list all
+// teste ok
+app.get('/items', (req, res) => {
+  try {
+    const data = readData();
+    res.json(data);
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to read data.' });
+  }
 });
 
-// 🔹 Buscar por ID
-app.get('/dados/:id', (req, res) => {
-    const dados = lerDados();
-    const id = parseInt(req.params.id);
-
-    const item = dados.find(d => d.id === id);
-
-    if (!item) {
-        return res.status(404).json({ erro: 'Item não encontrado' });
-    }
-
+// GET /items/:id — get one
+// teste ok
+app.get('/items/:id', (req, res) => {
+  try {
+    const data = readData();
+    const item = data.find((i) => i.id === Number(req.params.id));
+    if (!item) return res.status(404).json({ error: 'Item not found.' });
     res.json(item);
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to read data.' });
+  }
 });
 
-// 🔹 Filtrar por categoria
-app.get('/categoria/:categoria', (req, res) => {
-    const dados = lerDados();
-    const categoria = req.params.categoria;
-
-    const filtrados = dados.filter(d => d.categoria === categoria);
-
-    res.json(filtrados);
+// POST /items — create
+// teste ok
+app.post('/items', (req, res) => {
+  try {
+    const data = readData();
+    const newItem = { id: generateId(data), ...req.body };
+    data.push(newItem);
+    writeData(data);
+    res.status(201).json(newItem);
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to create item.' });
+  }
 });
 
-// 🔹 Busca por texto
-app.get('/buscar', (req, res) => {
-    const dados = lerDados();
-    const termo = req.query.q?.toLowerCase();
-
-    if (!termo) {
-        return res.status(400).json({ erro: 'Informe ?q=termo' });
-    }
-
-    const resultado = dados.filter(d =>
-        d.titulo?.toLowerCase().includes(termo) ||
-        d.descricao?.toLowerCase().includes(termo) ||
-        d.palavrasChave?.some(p => p.toLowerCase().includes(termo))
-    );
-
-    res.json(resultado);
+// PUT /items/:id — replace
+// teste ok
+app.put('/items/:id', (req, res) => {
+  try {
+    const data = readData();
+    const index = data.findIndex((i) => i.id === Number(req.params.id));
+    if (index === -1) return res.status(404).json({ error: 'Item not found.' });
+    data[index] = { id: Number(req.params.id), ...req.body };
+    writeData(data);
+    res.json(data[index]);
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to update item.' });
+  }
 });
 
-// ==========================
-// ROTAS POST
-// ==========================
-
-// 🔹 Criar novo item
-app.post('/dados', (req, res) => {
-    const dados = lerDados();
-    const novo = req.body;
-
-    // Validação básica
-    if (!novo.titulo || !novo.categoria) {
-        return res.status(400).json({ erro: 'titulo e categoria são obrigatórios' });
-    }
-
-    // Gerar ID único
-    const maxId = dados.length > 0 ? Math.max(...dados.map(d => d.id)) : 0;
-    novo.id = maxId + 1;
-
-    dados.push(novo);
-    salvarDados(dados);
-
-    res.status(201).json(novo);
+// PATCH /items/:id — partial update
+app.patch('/items/:id', (req, res) => {
+  try {
+    const data = readData();
+    const index = data.findIndex((i) => i.id === Number(req.params.id));
+    if (index === -1) return res.status(404).json({ error: 'Item not found.' });
+    data[index] = { ...data[index], ...req.body, id: Number(req.params.id) };
+    writeData(data);
+    res.json(data[index]);
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to patch item.' });
+  }
 });
 
-// ==========================
-// ROTAS PUT
-// ==========================
-
-// 🔹 Atualizar item
-app.put('/dados/:id', (req, res) => {
-    const dados = lerDados();
-    const id = parseInt(req.params.id);
-
-    const index = dados.findIndex(d => d.id === id);
-
-    if (index === -1) {
-        return res.status(404).json({ erro: 'Item não encontrado' });
-    }
-
-    dados[index] = { ...dados[index], ...req.body, id };
-
-    salvarDados(dados);
-
-    res.json(dados[index]);
+// DELETE /items/:id — delete
+// teste ok
+app.delete('/items/:id', (req, res) => {
+  try {
+    const data = readData();
+    const index = data.findIndex((i) => i.id === Number(req.params.id));
+    if (index === -1) return res.status(404).json({ error: 'Item not found.' });
+    const [removed] = data.splice(index, 1);
+    writeData(data);
+    res.json({ message: 'Item deleted.', item: removed });
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to delete item.' });
+  }
 });
 
-// ==========================
-// ROTAS DELETE
-// ==========================
+// ─────────────────────────────────────────────────────────────────────────────
 
-// 🔹 Remover item
-app.delete('/dados/:id', (req, res) => {
-    const dados = lerDados();
-    const id = parseInt(req.params.id);
-
-    const novosDados = dados.filter(d => d.id !== id);
-
-    if (dados.length === novosDados.length) {
-        return res.status(404).json({ erro: 'Item não encontrado' });
-    }
-
-    salvarDados(novosDados);
-
-    res.json({ mensagem: 'Item removido com sucesso' });
-});
-
-// ==========================
-// SERVIDOR
-// ==========================
-
-const PORT = 3000;
 app.listen(PORT, () => {
-    console.log(`Servidor rodando em http://localhost:${PORT}`);
+  console.log(`Server running at http://localhost:${PORT}`);
 });

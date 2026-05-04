@@ -71,18 +71,16 @@ function valor(letra, letr){
     return letra[index][Object.keys(letra[index])[0]];
 }
 
-// for(let i = 0; i < palavra.length ; i++){
+ const response = await fetch(`http://127.0.0.1:3000/palavra`, {
+    method: "GET",
+    headers : {"Content-Type" : "application/json"},
+    //body : JSON.stringify({})
+});
 
-//     if(palavra[i] == palabrasTeste[i]){
-//         console.log("certo")
-//     }else if(palavra.includes(palabrasTeste[i])) {
-//         console.log("Lugar errado")
-//         const qtdLetra = 0;
-//         for(let j = 0; j < palavra.length ; j++){
-//             if(palabrasTeste[j] == palabrasTeste[i]){
-//             }
-//         }
-//     } else {
-//         console.log("nao tem")
-//     }
-// }
+const dados = await response.json();
+
+export const RESULTADO = () =>{
+    return dados[0]?.["palavra"];
+}
+
+export { termo }
