@@ -9,3 +9,6 @@ const dados = await response.json();
 export const RESULTADO = () =>{
     return dados[0]?.["palavra"];
 }
+export const DICA = ()=>{
+    return dados[0]?.["dica"];
+}

@@ -1,13 +1,19 @@
 import { termo } from "../termo.js";
-import { RESULTADO } from "../palavraSecreta.js";
+import { RESULTADO, DICA } from "../palavraSecreta.js";
 
 const tabuleiro = document.getElementById("tabuleiro");
 
 const palavraSecreta = RESULTADO();
+const dica = DICA();
+
+const fraseDica = document.getElementById("dica");
 
 console.log("Palavra secreta:", palavraSecreta);
+console.log("Dica secreta: ", dica);
 
-const MAX_TENTATIVAS = 6;
+fraseDica.textContent = dica;
+
+const MAX_TENTATIVAS = 3;
 let tentativas = 0;
 
 criarLinha();

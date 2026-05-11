@@ -31,18 +31,9 @@ export async function palavraRandom(){
                 ORDER BY RANDOM() 
                 LIMIT 1
             )
-            RETURNING PALAVRA;
+            RETURNING PALAVRA, DICA;
         `
     );
-    // DO $$
-    // DECLARE 
-    //     RESULTADO INTEGER;
-    // BEGIN
-    //     SELECT ID_PALAVRA FROM REPOSITORIO WHERE ID_PALAVRA = (SELECT FLOOR(RANDOM() * 300 + 1)) INTO RESULTADO;
-    //     UPDATE REPOSITORIO SET INATIVA = NOW() WHERE ID_PALAVRA = RESULTADO;
-    // END $$;
-
-    // SELECT PALAVRA FROM REPOSITORIO WHERE INATIVA = (SELECT MAX(INATIVA) FROM REPOSITORIO);
     return res.rows;
 }
 
