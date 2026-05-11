@@ -31,7 +31,7 @@ function termo(palavra, palabrasTeste){
     for(let i = 0; i < palavra.length ; i++){
         if(palavra[i] == palabrasTeste[i]){
             if (valor(letra, palavra[i]) > 0) {
-                certos[i] = "verde"
+                certos[i] = "green"
                 diminui(letra, palavra[i])
             }
         }
@@ -40,18 +40,18 @@ function termo(palavra, palabrasTeste){
     //amarelo e errado
     for(let i = 0; i < palavra.length ; i++){
         if(palavra.includes(palabrasTeste[i])){
-            if (certos[i] === "verde") continue;
+            if (certos[i] === "green") continue;
             if(valor(letra, palabrasTeste[i]) > 0){
-                certos[i] = "amarelo"
+                certos[i] = "yellow"
                 diminui(letra, palabrasTeste[i])
             }else{
-                certos[i] = certos[i] == "" ? "vermelho" : certos[i];
+                certos[i] = certos[i] == "" ? "red" : certos[i];
             }
         }else{
-            certos[i] = "vermelho"
+            certos[i] = "red"
         }
     }
-    console.log(certos)
+    return certos
 }
 
 //console.log(valor("u"))
@@ -69,18 +69,6 @@ function diminui(letra, letr){
 function valor(letra, letr){
     const index = letra.findIndex(l => Object.keys(l)[0] == letr)
     return letra[index][Object.keys(letra[index])[0]];
-}
-
- const response = await fetch(`http://127.0.0.1:3000/palavra`, {
-    method: "GET",
-    headers : {"Content-Type" : "application/json"},
-    //body : JSON.stringify({})
-});
-
-const dados = await response.json();
-
-export const RESULTADO = () =>{
-    return dados[0]?.["palavra"];
 }
 
 export { termo }
