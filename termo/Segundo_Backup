@@ -1,0 +1,429 @@
+--
+-- PostgreSQL database dump
+--
+
+\restrict EybwUU3bt4pKmk7gUQFYkubKxffEGTdjcp0QB7T2ld2DJblw9oRdaYPH6W35EGb
+
+-- Dumped from database version 17.2
+-- Dumped by pg_dump version 18.1
+
+-- Started on 2026-05-13 14:38:49
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET transaction_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+SET default_tablespace = '';
+
+SET default_table_access_method = heap;
+
+--
+-- TOC entry 218 (class 1259 OID 16398)
+-- Name: repositorio; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.repositorio (
+    id_palavra integer NOT NULL,
+    palavra character varying(5) NOT NULL,
+    dica character varying(300) NOT NULL,
+    inativa timestamp without time zone
+);
+
+
+ALTER TABLE public.repositorio OWNER TO postgres;
+
+--
+-- TOC entry 217 (class 1259 OID 16397)
+-- Name: repositorio_id_palavra_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.repositorio_id_palavra_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.repositorio_id_palavra_seq OWNER TO postgres;
+
+--
+-- TOC entry 4901 (class 0 OID 0)
+-- Dependencies: 217
+-- Name: repositorio_id_palavra_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.repositorio_id_palavra_seq OWNED BY public.repositorio.id_palavra;
+
+
+--
+-- TOC entry 4742 (class 2604 OID 16401)
+-- Name: repositorio id_palavra; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.repositorio ALTER COLUMN id_palavra SET DEFAULT nextval('public.repositorio_id_palavra_seq'::regclass);
+
+
+--
+-- TOC entry 4895 (class 0 OID 16398)
+-- Dependencies: 218
+-- Data for Name: repositorio; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.repositorio (id_palavra, palavra, dica, inativa) FROM stdin;
+1	boato	Notícia anônima que se espalha rapidamente sem confirmação oficial.	\N
+2	botas	Calçados que protegem os pés e parte das pernas, usados em trilhas.	\N
+3	acola	Advérbio que indica um lugar distante de quem fala e de quem ouve.	\N
+4	arena	Local circular onde ocorrem competições ou grandes espetáculos.	\N
+5	orgao	Parte do corpo com função específica ou instrumento musical de tubos.	\N
+6	bosta	Termo vulgar para descrever excremento animal.	\N
+7	certo	Aquilo que está correto, exato ou sem nenhum erro.	\N
+8	aquem	Indica que algo está em posição inferior ou do lado de cá de um limite.	\N
+9	apuro	Situação de grande dificuldade ou necessidade de refinamento.	\N
+10	atual	O que pertence ao tempo presente ou é considerado moderno.	\N
+11	arduo	Algo que é muito difícil, cansativo ou penoso de se realizar.	\N
+12	aroma	Cheiro agradável que emana de flores, perfumes ou alimentos.	\N
+13	etico	Indivíduo que age de acordo com princípios morais e bons costumes.	\N
+14	natal	Celebração anual que marca o nascimento e a união familiar.	\N
+15	bambu	Planta de caule oco e resistente, muito comum na Ásia.	\N
+16	hotel	Estabelecimento que oferece hospedagem e serviços para viajantes.	\N
+17	bicho	Termo genérico usado para designar qualquer animal.	\N
+18	birra	Teimosia infantil ou comportamento de quem está amuado.	\N
+19	globo	Objeto esférico que representa o planeta Terra.	\N
+20	tedio	Sensação de enfado ou falta de interesse pelo que está acontecendo.	\N
+21	quase	Indica que algo faltou muito pouco para acontecer de fato.	\N
+22	passo	Cada movimento das pernas ao caminhar ou uma etapa de um processo.	\N
+23	ansia	Desejo intenso por algo ou sensação de sufocamento.	\N
+24	abalo	Choque emocional ou tremor de terra causado por forças naturais.	\N
+25	basto	Algo que existe em grande quantidade ou que é suficiente.	\N
+26	bodas	Celebração que marca o aniversário de um casamento.	\N
+27	elite	Grupo de pessoas que ocupa o topo da hierarquia social ou intelectual.	\N
+28	impar	Número que não é divisível por dois ou algo fora do comum.	\N
+29	bruma	Névoa baixa que reduz a visibilidade, comum em manhãs frias.	\N
+30	aceno	Movimento feito com a mão ou a cabeça para cumprimentar alguém.	\N
+31	brabo	Pessoa que está muito irritada, zangada ou que é valente.	\N
+32	sanar	Ato de curar uma doença ou resolver um problema pendente.	\N
+33	barao	Antigo título de nobreza ou termo usado para grandes empresários.	\N
+34	carro	Veículo de quatro rodas utilizado para o transporte de passageiros.	\N
+35	barba	Pelos que crescem no rosto de homens, cobrindo o queixo e as bochechas.	\N
+36	grade	Estrutura de metal ou madeira usada para proteção ou cercamento.	\N
+37	lindo	Adjetivo usado para algo que desperta admiração visual ou estética.	\N
+38	leite	Líquido branco e nutritivo produzido pelas fêmeas dos mamíferos.	\N
+39	bocal	Peça de instrumentos de sopro onde o músico coloca os lábios.	\N
+40	aceso	Estado de algo que está em chamas ou conectado à eletricidade.	\N
+41	terao	Verbo que indica posse ou existência em um tempo futuro.	\N
+42	balao	Objeto inflável usado em festas ou para voos tripulados.	\N
+43	drama	Gênero teatral ou situação da vida real com muita comoção.	\N
+44	anote	Ordem para que alguém registre uma informação por escrito.	\N
+45	usina	Estabelecimento industrial onde se produz energia ou açúcar.	\N
+46	extra	Algo que ultrapassa o limite normal ou que é adicional.	\N
+47	total	Valor que representa a soma de todas as partes de um conjunto.	\N
+48	ideal	Modelo de perfeição ou algo que é buscado como objetivo máximo.	\N
+49	selva	Ecossistema com vegetação densa e muitos animais selvagens.	\N
+50	abate	Redução no preço de algo ou o ato de matar animais para consumo.	\N
+51	unico	Algo que é sem igual, raro ou que não tem semelhantes.	\N
+52	corpo	Estrutura física de um ser vivo ou a parte principal de um texto.	\N
+53	agora	Indica o exato momento presente em que se fala.	\N
+54	estar	Verbo que define uma condição temporária ou localização no espaço.	\N
+55	calma	Estado de tranquilidade e ausência de agitação ou barulho.	\N
+56	balda	Defeito ou vício, muito comum em animais de carga.	\N
+57	bruxa	Personagem do folclore conhecida por fazer feitiços e voar em vassouras.	\N
+58	usado	Objeto que já teve outro dono ou que não é mais novo.	\N
+59	adito	Acréscimo ou algo que foi somado a uma conta ou contrato.	\N
+60	suave	Sensação tátil agradável, como a de um tecido delicado.	\N
+61	juizo	Capacidade humana de julgar com sabedoria ou decisão de um magistrado.	\N
+62	serio	Alguém que não brinca ou algo que exige muita atenção e cuidado.	\N
+63	braga	Sobrenome comum ou cidade importante ao norte de Portugal.	\N
+64	bones	Acessórios usados na cabeça para proteger os olhos do sol.	\N
+65	denso	Algo que possui muita massa em pouco volume ou é muito espesso.	\N
+66	humor	Estado de espírito de uma pessoa ou capacidade de achar graça.	\N
+67	afixo	Aquilo que é fixo ou algo que se anexa ao radical de uma palavra.	\N
+68	asilo	Instituição que acolhe idosos ou pessoas que buscam proteção política.	\N
+69	hiena	Animal carnívoro da savana conhecido por seu som semelhante a uma risada.	\N
+70	uncao	Rito religioso que utiliza óleos sagrados, comum em enfermos.	\N
+71	beato	Pessoa extremamente devota ou que foi beatificada pela igreja.	\N
+72	algum	Pronome que indica uma quantidade ou pessoa não especificada.	\N
+73	possa	Verbo que indica capacidade, permissão ou possibilidade de algo.	\N
+74	vazio	Local que não contém nada em seu interior ou falta de conteúdo.	\N
+75	digno	Alguém que merece respeito ou que possui nobreza de caráter.	\N
+76	banca	Mesa de feira, guichê de apostas ou conjunto de examinadores.	\N
+77	saber	Ato de ter conhecimento sobre algo ou possuir uma habilidade.	\N
+78	venia	Pedido de licença ou perdão por algo dito ou feito.	\N
+79	junta	Grupo de pessoas reunidas para uma finalidade ou conexão de peças.	\N
+80	avela	Pequeno fruto de casca dura muito usado em doces e chocolates.	\N
+81	uniao	Estado de quem está unido ou associação de pessoas e estados.	\N
+82	beber	Ato de ingerir líquidos para saciar a sede ou por prazer.	\N
+83	ponto	Marca mínima feita com caneta ou lugar específico em um mapa.	\N
+84	criar	Verbo que significa dar existência a algo novo ou inventar.	\N
+85	zelos	Cuidado extremo e dedicação ao realizar uma tarefa ou proteger algo.	\N
+86	horda	Grande grupo de pessoas ou bando nômade com intenções hostis.	\N
+87	xelim	Antiga moeda britânica que circulava antes da decimalização.	\N
+88	pleno	Algo que está completo, inteiro ou em seu estágio máximo.	\N
+89	duplo	O que é composto por duas partes iguais ou o dobro de algo.	\N
+90	outro	Refere-se a uma pessoa ou coisa diferente da que se mencionou.	\N
+91	tarde	Período do dia que vai do meio-dia até o pôr do sol.	\N
+92	ideia	Pensamento que surge na mente ou plano para realizar algo.	\N
+93	broca	Ferramenta usada para fazer furos em superfícies duras como paredes.	\N
+94	beira	Margem de um rio ou limite extremo de uma superfície.	\N
+95	barca	Embarcação de grande porte ou veículo usado para travessias.	\N
+96	azado	Algo que é oportuno, favorável ou que tem asas.	\N
+97	exodo	Saída em massa de um povo de seu território por necessidade.	\N
+98	secao	Divisão de um órgão público, loja ou parte de um texto.	\N
+99	peixe	Animal vertebrado aquático que respira por guelras.	\N
+100	exame	Teste de conhecimento ou avaliação médica detalhada.	\N
+101	balde	Recipiente com alça usado para carregar água ou outros líquidos.	\N
+102	boina	Tipo de chapéu arredondado e sem abas, muito usado por militares.	\N
+103	banda	Grupo de músicos que tocam juntos ou tira de tecido.	\N
+104	nossa	Pronome possessivo que indica que algo pertence a nós.	\N
+105	casto	Alguém que se abstém de prazeres carnais ou é puro.	\N
+106	danca	Arte de movimentar o corpo seguindo o ritmo de uma música.	\N
+107	desde	Indica o ponto de partida no tempo ou no espaço.	\N
+108	assim	Advérbio usado para indicar que algo é feito de tal maneira.	\N
+109	ordem	Estado de organização ou comando vindo de uma autoridade.	\N
+110	abril	Quarto mês do ano, conhecido pelas chuvas e pela Páscoa.	\N
+111	zinco	Metal azulado usado para revestir ferro e evitar a corrosão.	\N
+112	horta	Pequeno terreno destinado ao cultivo de legumes e hortaliças.	\N
+113	bruta	Mulher que é rude ou algo que ainda não foi lapidado.	\N
+114	idoso	Pessoa que possui idade avançada e muita experiência de vida.	\N
+115	golpe	Ato de bater com força ou uma estratégia para derrubar um governo.	\N
+116	sagaz	Pessoa que percebe as coisas rapidamente e tem raciocínio astuto.	\N
+117	bolha	Esfera de ar dentro de um líquido ou na superfície da pele.	\N
+118	atroz	Algo que é cruel, desumano ou extremamente violento.	\N
+119	bruto	Objeto no seu estado natural ou pessoa sem educação.	\N
+120	bingo	Jogo de sorte onde se marcam números em uma cartela.	\N
+121	afago	Ato de carinho feito com as mãos, como um cafuné.	\N
+122	poder	Capacidade de mandar ou exercer influência sobre outros.	\N
+123	borda	Margem externa de um objeto ou extremidade de uma folha.	\N
+124	banho	Ato de lavar o corpo por higiene ou relaxamento.	\N
+125	broto	Nova planta que começa a crescer ou pessoa muito jovem.	\N
+126	breca	Termo antigo para uma parada brusca ou defeito mecânico.	\N
+127	xarda	Tipo de mancha na pele ou defeito em superfícies metálicas.	\N
+128	beata	Mulher que vive de forma religiosa ou finge muita virtude.	\N
+129	zebra	Mamífero africano com listras brancas e pretas pelo corpo.	\N
+130	razao	Capacidade humana de raciocinar ou motivo de um ato.	\N
+131	abeto	Árvore de madeira resistente muito usada para fazer móveis.	\N
+132	apice	Ponto mais alto de uma montanha ou o auge de uma carreira.	\N
+133	brasa	Pedaço de carvão ou madeira que ainda queima sem flama.	\N
+134	lente	Peça de vidro ou plástico usada para corrigir a visão.	\N
+135	tenue	Algo que é muito fino, delicado ou difícil de perceber.	\N
+136	animo	Estado de disposição, coragem ou vontade de fazer algo.	\N
+137	aureo	Cor de ouro ou algo que é brilhante e valioso.	\N
+138	doido	Alguém que perdeu a sanidade mental ou que está apaixonado.	\N
+139	dizer	Verbo usado para expressar pensamentos por meio de palavras.	\N
+140	metro	Unidade de medida fundamental para comprimento no sistema métrico.	\N
+141	sabio	Alguém que possui muito conhecimento e experiência acumulada.	\N
+142	basta	Indica que algo é suficiente ou ordem para parar uma ação.	\N
+143	anjos	Seres celestiais mensageiros presentes em diversas religiões.	\N
+144	forma	Configuração externa de um objeto ou maneira de se organizar.	\N
+145	manga	Fruta tropical doce ou parte da roupa que cobre o braço.	\N
+146	feroz	Animal que ataca com violência ou pessoa muito brava.	\N
+147	acido	Substância química com sabor azedo que corrói metais.	\N
+148	manso	Alguém que é tranquilo, dócil e fácil de lidar.	\N
+149	ferro	Metal cinza muito resistente usado em construções e ferramentas.	\N
+150	solar	Relativo ao sol ou sistema de captação de energia luminosa.	\N
+151	barco	Veículo aquático usado para transporte em rios e mares.	\N
+152	tenaz	Alguém que é persistente e não desiste facilmente de um plano.	\N
+153	risco	Possibilidade de perigo ou de algo não dar certo.	\N
+154	clima	Condições atmosféricas médias de uma região ao longo do tempo.	\N
+155	zumbi	Criatura fictícia que revive e se alimenta de humanos.	\N
+156	grupo	Conjunto de pessoas ou objetos com características comuns.	\N
+157	kilos	Forma coloquial de se referir a uma medida de peso.	\N
+158	wafer	Tipo de biscoito fino e crocante com várias camadas.	\N
+159	jogar	Participar de uma competição esportiva ou diversão com regras.	\N
+160	valor	Preço de algo ou qualidade moral de uma pessoa.	\N
+161	ileso	Alguém que saiu de um acidente sem sofrer nenhum ferimento.	\N
+162	breve	Algo que dura pouco tempo ou que é resumido.	\N
+163	cobra	Réptil sem patas que se rasteja e pode ser venenoso.	\N
+164	haste	Parte longa de uma planta ou suporte de uma bandeira.	\N
+165	wisky	Bebida alcoólica destilada feita de cereais, muito popular.	\N
+166	lapis	Objeto de escrita com grafite protegido por madeira.	\N
+167	radar	Equipamento que detecta objetos à distância por ondas de rádio.	\N
+168	xerox	Processo de reprodução idêntica de documentos em papel.	\N
+169	borra	Resto de café no fundo da xícara ou sujeira acumulada.	\N
+170	chuva	Fenômeno meteorológico de precipitação de água das nuvens.	\N
+171	algoz	Pessoa que executa uma sentença de morte ou causa sofrimento.	\N
+172	doado	Algo que foi entregue gratuitamente para ajudar alguém.	\N
+173	quota	Parte que cabe a cada um em uma partilha ou limite de algo.	\N
+174	nivel	Grau de altura, intensidade ou posição em uma escala.	\N
+175	truta	Peixe de água doce muito apreciado na gastronomia.	\N
+176	braco	Membro superior do corpo humano que vai do ombro à mão.	\N
+177	macro	Prefixo que indica algo que é muito grande ou visível a olho nu.	\N
+178	dogma	Ponto fundamental de uma doutrina que não admite dúvida.	\N
+179	raiva	Sentimento de fúria ou doença transmitida por mordida de animais.	\N
+180	zelar	Ter cuidado com algo ou vigiar para que nada aconteça.	\N
+181	unido	Aquilo que está junto ou que possui um propósito comum.	\N
+182	abuso	Uso incorreto ou excessivo de um poder ou substância.	\N
+183	anexo	Documento ou objeto que é enviado junto com outro.	\N
+184	viver	Estar vivo ou aproveitar a existência de forma plena.	\N
+185	igual	Algo que não apresenta diferença quando comparado a outro.	\N
+186	chulo	Linguagem grosseira, baixa ou sem nenhum refinamento.	\N
+187	falar	Ato de emitir sons vocais para se comunicar com alguém.	\N
+188	rural	Relativo ao campo ou à vida fora das grandes cidades.	\N
+189	orfao	Criança que perdeu o pai, a mãe ou ambos os progenitores.	\N
+190	amora	Fruta pequena e escura, muito usada em geleias e sucos.	\N
+191	bloco	Pedaço sólido de algo ou conjunto de prédios em uma rua.	\N
+192	reger	Verbo que significa governar ou dirigir conforme as leis.	\N
+193	bucha	Objeto usado para limpeza ou peça de metal para vedação.	\N
+194	rumor	Som vago e baixo que se ouve de longe ou fofoca.	\N
+195	baixa	Diminuição de valor ou parte funda de uma região.	\N
+196	inato	Qualidade que já nasce com o indivíduo e não foi aprendida.	\N
+197	mutua	Algo que é recíproco ou compartilhado entre duas partes.	\N
+198	bucho	Estômago de animais ruminantes, usado como alimento humano.	\N
+199	itens	Cada uma das unidades que compõem uma lista ou estoque.	\N
+200	xisto	Rocha sedimentar que pode ser usada como fonte de energia.	\N
+201	balsa	Embarcação plana usada para transportar carros e pessoas em rios.	\N
+202	visto	Autorização em passaporte ou algo que foi observado.	\N
+203	heroi	Pessoa que realiza atos de grande coragem e sacrifício.	\N
+204	ontem	Refere-se ao dia que precedeu imediatamente o dia de hoje.	\N
+205	banal	Algo que é comum, sem importância ou muito repetido.	\N
+206	watts	Unidade de medida de potência elétrica em um sistema.	\N
+207	baque	Som de algo pesado caindo ou choque emocional forte.	\N
+208	lugar	Espaço ocupado por algo ou uma localidade específica.	\N
+209	yenes	Unidade monetária oficial utilizada no Japão.	\N
+210	geral	Algo que atinge a todos ou que não é detalhado.	\N
+211	oeste	Ponto cardeal onde o sol se esconde no horizonte.	\N
+212	trens	Meios de transporte ferroviários compostos por vários vagões.	\N
+213	bolsa	Acessório usado para carregar pertences ou mercado de valores.	\N
+214	kendo	Arte marcial japonesa que utiliza espadas de bambu.	\N
+215	fazer	Verbo que indica a execução de uma tarefa ou ação.	\N
+216	amplo	Algo que possui grandes dimensões ou muita abrangência.	\N
+217	mudar	Ato de transformar algo ou sair de uma condição para outra.	\N
+218	vento	Movimento do ar na atmosfera que pode ser brisa ou vendaval.	\N
+219	jurar	Afirmar algo com solenidade, muitas vezes invocando o divino.	\N
+220	honra	Princípio de integridade e respeito conquistado por alguém.	\N
+221	verba	Quantia em dinheiro destinada a um fim específico.	\N
+222	belos	Adjetivo plural para coisas que agradam esteticamente.	\N
+223	bolso	Pequena bolsa costurada nas roupas para guardar objetos.	\N
+224	bamba	Alguém que é muito bom em algo ou que está vacilante.	\N
+225	nuvem	Massa visível de vapor de água suspensa na atmosfera.	\N
+226	bolas	Objetos esféricos usados em diversos esportes e jogos.	\N
+227	alibi	Prova de que uma pessoa estava em outro lugar na hora do crime.	\N
+228	quais	Pronome usado para selecionar elementos de um grupo.	\N
+229	aluno	Pessoa que frequenta uma escola para adquirir conhecimento.	\N
+230	justo	Alguém que age com imparcialidade e de acordo com a lei.	\N
+231	salto	Movimento de elevar o corpo do chão ou peça de calçados.	\N
+232	morte	Fim da vida biológica de um ser vivo ou término de algo.	\N
+233	bocha	Jogo que consiste em arremessar bolas de madeira perto de um alvo.	\N
+234	bravo	Pessoa corajosa que não demonstra medo diante do perigo.	\N
+235	aluna	Mulher ou menina que se dedica aos estudos em uma escola.	\N
+236	junco	Planta que cresce em áreas úmidas, usada para fazer cestos.	\N
+237	sonho	Imagens e sensações que ocorrem na mente durante o sono.	\N
+238	vigor	Força física, energia ou validade jurídica de uma lei.	\N
+239	alado	Ser que possui asas ou algo que se desloca pelo ar.	\N
+240	brito	Pedra fragmentada usada em pavimentação e construção civil.	\N
+241	sutil	Algo que é delicado, engenhoso ou difícil de ser notado.	\N
+242	focar	Ajustar a visão para ver melhor ou concentrar-se em um objetivo.	\N
+243	vasto	Algo que é muito extenso, amplo ou sem limites visíveis.	\N
+244	andor	Suporte usado para carregar imagens religiosas em procissões.	\N
+245	canto	Ato de emitir melodia com a voz ou ângulo de uma sala.	\N
+246	banjo	Instrumento musical de cordas muito usado no samba e country.	\N
+247	senda	Caminho estreito ou direção que se deve seguir na vida.	\N
+248	jeito	Modo particular de fazer algo ou aparência de uma pessoa.	\N
+249	agudo	Som muito alto e fino ou algo que termina em ponta.	\N
+250	bispo	Membro do alto clero na hierarquia da igreja católica.	\N
+251	meigo	Pessoa carinhosa, dócil e que trata os outros com suavidade.	\N
+252	bossa	Estilo musical brasileiro ou protuberância nas costas.	\N
+253	peito	Parte frontal do tronco humano ou coragem para enfrentar algo.	\N
+254	lance	Movimento rápido em uma luta ou oferta em um leilão.	\N
+255	donde	Advérbio interrogativo sobre a origem de algo ou alguém.	\N
+256	acima	Em posição superior a algo ou no andar de mais alto.	\N
+257	vocal	Relativo à voz humana ou sons produzidos pelas cordas vocais.	\N
+258	frase	Conjunto de palavras que expressa um pensamento completo.	\N
+259	jovem	Alguém que está na fase da vida entre a infância e a idade adulta.	\N
+260	afiar	Tornar um objeto cortante mais afiado usando uma pedra.	\N
+261	alias	Palavra usada para introduzir uma explicação adicional.	\N
+262	bomba	Dispositivo feito para explodir ou equipamento para puxar água.	\N
+263	ouvir	Perceber sons pelo ouvido ou prestar atenção ao que é dito.	\N
+264	grito	Som vocal muito alto emitido em situações de dor ou susto.	\N
+265	navio	Embarcação de grande porte que viaja por oceanos.	\N
+266	briga	Conflito entre pessoas com agressões verbais ou físicas.	\N
+267	antes	Indica um tempo anterior ou uma posição adiantada.	\N
+268	epoca	Período de tempo marcado por eventos ou costumes específicos.	\N
+269	moeda	Peça de metal cunhada que serve como dinheiro físico.	\N
+270	filme	Obra audiovisual composta por uma sequência de imagens.	\N
+271	abono	Pagamento extra dado a um funcionário ou perdão de falta.	\N
+272	brava	Mulher valente ou mar que apresenta ondas muito fortes.	\N
+273	aneis	Peças circulares usadas nos dedos como adorno ou compromisso.	\N
+274	prata	Metal precioso de cor cinza brilhante usado em joias.	\N
+275	aonde	Advérbio que indica o destino de um movimento ou ação.	\N
+276	aviso	Mensagem enviada para informar alguém sobre algo importante.	\N
+277	fundo	Parte mais baixa de um recipiente ou a base de algo.	\N
+278	abano	Objeto usado para movimentar o ar e refrescar o rosto.	\N
+279	adubo	Substância colocada na terra para ajudar as plantas a crescerem.	\N
+280	graca	Favor concedido gratuitamente ou elegância nos movimentos.	\N
+281	troca	Ato de dar uma coisa em troca de outra ou substituição.	\N
+282	quilo	Unidade de medida de massa equivalente a mil gramas.	\N
+283	banco	Instituição financeira ou móvel longo para várias pessoas sentarem.	\N
+284	nunca	Advérbio que nega a ocorrência de algo em qualquer tempo.	\N
+285	brejo	Terreno muito úmido e cheio de lama, comum em várzeas.	\N
+286	beijo	Toque de lábios em alguém como sinal de afeto ou saudação.	\N
+287	botao	Pequena peça usada para fechar roupas ou acionar máquinas.	\N
+288	tunel	Passagem subterrânea ou cavada através de uma montanha.	\N
+289	brisa	Vento muito suave e agradável que sopra levemente.	\N
+290	moral	Conjunto de regras que orientam o comportamento em sociedade.	\N
+291	xeque	Situação no xadrez onde o rei está sob ataque direto.	\N
+292	preso	Alguém que teve sua liberdade privada e está em uma cela.	\N
+293	favor	Ato de gentileza feito para ajudar alguém sem obrigação.	\N
+294	bobos	Pessoas que agem com falta de inteligência ou infantilidade.	\N
+295	atras	Indica uma posição na parte traseira de algo ou alguém.	\N
+296	anual	Algo que acontece ou é publicado uma vez a cada ano.	\N
+297	glosa	Comentário explicativo sobre um texto ou interpretação.	\N
+298	pauta	Lista de assuntos que serão discutidos em uma reunião.	\N
+299	amago	A parte mais íntima, profunda ou central de algo.	\N
+300	anglo	Relativo aos países que possuem o inglês como língua oficial.	\N
+\.
+
+
+--
+-- TOC entry 4902 (class 0 OID 0)
+-- Dependencies: 217
+-- Name: repositorio_id_palavra_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.repositorio_id_palavra_seq', 1, false);
+
+
+--
+-- TOC entry 4744 (class 2606 OID 16407)
+-- Name: repositorio repositorio_dica_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.repositorio
+    ADD CONSTRAINT repositorio_dica_key UNIQUE (dica);
+
+
+--
+-- TOC entry 4746 (class 2606 OID 16405)
+-- Name: repositorio repositorio_palavra_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.repositorio
+    ADD CONSTRAINT repositorio_palavra_key UNIQUE (palavra);
+
+
+--
+-- TOC entry 4748 (class 2606 OID 16403)
+-- Name: repositorio repositorio_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.repositorio
+    ADD CONSTRAINT repositorio_pkey PRIMARY KEY (id_palavra);
+
+
+-- Completed on 2026-05-13 14:38:49
+
+--
+-- PostgreSQL database dump complete
+--
+
+\unrestrict EybwUU3bt4pKmk7gUQFYkubKxffEGTdjcp0QB7T2ld2DJblw9oRdaYPH6W35EGb
+
