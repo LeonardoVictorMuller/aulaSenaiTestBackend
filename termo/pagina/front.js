@@ -7,6 +7,7 @@ const dicaElement = document.getElementById("dica");
 
 let palavraSecreta = RESULTADO();
 let dica = DICA();
+let mensagemTimeoutId = null;
 
 dicaElement.textContent = dica;
 
@@ -19,11 +20,23 @@ let tentativas = 0;
 criarLinha();
 
 function mostrarMensagem(texto, tipo) {
-    mensagemContainer.innerHTML = `<div class="mensagem ${tipo}">${texto}</div>`;
-    
-    // Remove a mensagem após 3 segundos
-    setTimeout(() => {
-        mensagemContainer.innerHTML = "";
+    const mensagemAnterior = mensagemContainer.querySelector(".mensagem");
+    if (mensagemAnterior) {
+        mensagemAnterior.remove();
+    }
+
+    const mensagemElement = document.createElement("div");
+    mensagemElement.className = `mensagem ${tipo}`;
+    mensagemElement.textContent = texto;
+    mensagemContainer.prepend(mensagemElement);
+
+    if (mensagemTimeoutId) {
+        clearTimeout(mensagemTimeoutId);
+    }
+
+    mensagemTimeoutId = setTimeout(() => {
+        mensagemElement.remove();
+        mensagemTimeoutId = null;
     }, 3000);
 }
 
