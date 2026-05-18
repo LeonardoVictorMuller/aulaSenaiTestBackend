@@ -28,6 +28,92 @@ body {
 }
 
 /* ==========================================================================
+   Container de Mensagens
+   ========================================================================== */
+.mensagem-container {
+    margin-top: 20px;
+    min-height: 80px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+}
+
+.mensagem {
+    font-size: 1.1rem;
+    font-weight: 600;
+    padding: 15px 30px;
+    border-radius: 8px;
+    text-align: center;
+    animation: slideIn 0.3s ease-out;
+}
+
+.mensagem.vitoria {
+    background-color: #22863a;
+    color: #85e89d;
+    border: 1px solid #28a745;
+}
+
+.mensagem.derrota {
+    background-color: #6d1f1a;
+    color: #f97583;
+    border: 1px solid #d73a49;
+}
+
+.mensagem.aviso {
+    background-color: #735c0f;
+    color: #ffea7f;
+    border: 1px solid #d4a017;
+}
+
+.mensagem.erro {
+    background-color: #6d1f1a;
+    color: #f97583;
+    border: 1px solid #d73a49;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ==========================================================================
+   Botão Nova Palavra
+   ========================================================================== */
+.btn-nova-palavra {
+    background-color: #3a9970;
+    color: #ffffff;
+    border: none;
+    padding: 12px 24px;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+.btn-nova-palavra:hover {
+    background-color: #2d7a5a;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+}
+
+.btn-nova-palavra:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* ==========================================================================
    Tabuleiro e Linhas
    ========================================================================== */
 #tabuleiro {
