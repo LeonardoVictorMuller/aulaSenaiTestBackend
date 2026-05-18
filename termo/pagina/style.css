@@ -1,24 +1,81 @@
+/* ==========================================================================
+   Configurações Gerais e Tema Escuro
+   ========================================================================== */
+body {
+    background-color: #121213;
+    color: #ffffff;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    margin: 0;
+}
+
+/* Estilização da Dica */
+#dica {
+    font-size: 1.2rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: #818384;
+    background-color: #1a1a1b;
+    padding: 10px 20px;
+    border-radius: 8px;
+    border: 1px solid #3a3a3c;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+/* ==========================================================================
+   Tabuleiro e Linhas
+   ========================================================================== */
 #tabuleiro {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 8px;
+    margin-top: 20px;
 }
 
 .linha {
     display: flex;
-    gap: 5px;
+    gap: 8px;
 }
 
+/* ==========================================================================
+   Estilização dos Inputs (Quadrados das Letras)
+   ========================================================================== */
 .letra {
-    width: 50px;
-    height: 50px;
-
+    width: 58px;
+    height: 58px;
     text-align: center;
-
-    font-size: 24px;
-    font-weight: bold;
-
+    font-size: 28px;
+    font-weight: 700;
     text-transform: uppercase;
+    
+    /* Cores padrão (Vazio / Digitando) */
+    background-color: transparent;
+    color: #ffffff;
+    border: 2px solid #3a3a3c;
+    border-radius: 4px;
+    
+    /* Suaviza as transições de cores e foco */
+    transition: all 0.2s ease;
+    outline: none;
+    box-sizing: border-box;
+}
 
-    border: 2px solid #999;
+/* Efeito quando o jogador está editando o quadrado atual */
+.letra:focus {
+    border-color: #565758;
+    background-color: #1a1a1b;
+    transform: scale(1.05); /* Leve pulo ao focar */
+}
+
+/* Quando o input está desativado (já respondido) */
+.letra:disabled {
+    color: #ffffff; /* Garante que o texto continue branco após travar */
+    border: none;   /* Remove a borda para destacar a cor de fundo */
+    opacity: 1;     /* Impede o navegador de esmaecer o input desativado */
+    cursor: not-allowed;
 }
