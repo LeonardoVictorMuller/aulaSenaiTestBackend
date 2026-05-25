@@ -42,7 +42,7 @@ function termo(palavra, palabrasTeste){
         if(palavra.includes(palabrasTeste[i])){
             if (certos[i] === "green") continue;
             if(valor(letra, palabrasTeste[i]) > 0){
-                certos[i] = "yellow"
+                certos[i] = "#fafa3dff"
                 diminui(letra, palabrasTeste[i])
             }else{
                 certos[i] = certos[i] == "" ? "red" : certos[i];

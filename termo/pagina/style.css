@@ -164,4 +164,5 @@ body {
     border: none;   /* Remove a borda para destacar a cor de fundo */
     opacity: 1;     /* Impede o navegador de esmaecer o input desativado */
     cursor: not-allowed;
+    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -2px black;
 }
